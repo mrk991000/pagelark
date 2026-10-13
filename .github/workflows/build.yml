@@ -1,0 +1,85 @@
+name: Build Pagelark
+
+# Runs when you push a version tag like v1.0.0, or manually from the Actions tab.
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            name: windows
+          - os: macos-latest
+            name: macos
+          - os: ubuntu-latest
+            name: linux
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Install Linux build tools
+        if: matrix.name == 'linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev
+
+      - run: flutter pub get
+
+      # ---------- Windows ----------
+      - name: Build Windows
+        if: matrix.name == 'windows'
+        run: flutter build windows --release
+
+      - name: Package Windows
+        if: matrix.name == 'windows'
+        shell: pwsh
+        run: Compress-Archive -Path build/windows/x64/runner/Release/* -DestinationPath Pagelark-windows.zip
+
+      # ---------- macOS ----------
+      - name: Build macOS
+        if: matrix.name == 'macos'
+        run: flutter build macos --release
+
+      - name: Package macOS
+        if: matrix.name == 'macos'
+        run: |
+          cd build/macos/Build/Products/Release
+          APP=$(ls -d *.app | head -n 1)
+          ditto -c -k --sequesterRsrc --keepParent "$APP" "$GITHUB_WORKSPACE/Pagelark-macos.zip"
+
+      # ---------- Linux ----------
+      - name: Build Linux
+        if: matrix.name == 'linux'
+        run: flutter build linux --release
+
+      - name: Package Linux
+        if: matrix.name == 'linux'
+        run: tar -czf Pagelark-linux.tar.gz -C build/linux/x64/release/bundle .
+
+      # ---------- Upload ----------
+      - name: Keep the build as a download on the Actions page
+        uses: actions/upload-artifact@v4
+        with:
+          name: Pagelark-${{ matrix.name }}
+          path: Pagelark-*
+
+      - name: Attach to the GitHub Release (tags only)
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: Pagelark-*
