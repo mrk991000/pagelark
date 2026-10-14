@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pagelark: a free, open-source freeform notebook</title>
-<meta name="description" content="Pagelark is a free, open-source notebook where you double click anywhere and type and draw and import images. For Windows, macOS, Linux and Android">
+<meta name="description" content="Pagelark is a free, open-source notebook where you click anywhere and type. For Windows, macOS and Linux.">
 <link rel="icon" href="icon.png">
 <style>
   :root {
@@ -95,27 +95,29 @@
 </style>
 </head>
 <body>
+<div class="warn" id="warn">Setup needed: open index.html and replace mrk991000 in the REPO line near the bottom, then upload it again.</div>
+
 <header>
   <div class="wrap">
     <a class="logo" href="#top"><img src="icon.png" alt="">Pagelark</a>
     <nav>
-<a href="#download">Download</a>
-     
       <a href="#features">Features</a>
-      
+      <a href="#download">Download</a>
+      <a id="repoLink" href="https://github.com/mrk991000/pagelark">GitHub</a>
+    </nav>
   </div>
 </header>
 
 <main id="top">
   <div class="wrap hero">
     <div>
-      <h1>A Simple Freeform Notebook.</h1>
-      <p class="lead">Pagelark is a free, open-source notebook.Double Click anywhere, type, draw and import images.</p>
+      <h1>Notes that go anywhere on the page.</h1>
+      <p class="lead">Pagelark is a free, open-source notebook. Click anywhere, type, drag things around. No account, no cloud, and your notes stay on your computer.</p>
       <div class="downloads">
         <a class="btn primary" id="mainDownload" href="#download">Download</a>
         <a class="btn" href="#download">All platforms</a>
       </div>
-      <p class="small" id="osNote">Free for Windows, macOS, Linux and Android.</p>
+      <p class="small" id="osNote">Free for Windows, macOS and Linux.</p>
     </div>
 
     <div class="mock" aria-hidden="true">
@@ -128,25 +130,6 @@
     </div>
   </div>
 
-
-<section id="download">
-    <div class="wrap">
-      <h2>Download Pagelark</h2>
-      <p class="sub">Pick your system. All downloads are free.</p>
-      <div class="dl-grid">
-        <div class="card dl" id="card-windows"><h3>Windows</h3><p>Windows 10 or newer</p><a class="btn primary" data-file="Pagelark-windows.zip" href="https://github.com/mrk991000/pagelark/releases/latest/download/Pagelark-windows.zip">Download .zip</a></div>
-        <div class="card dl" id="card-macos"><h3>macOS</h3><p>Apple silicon and Intel</p><a class="btn primary" data-file="Pagelark-macos.zip" href="https://github.com/mrk991000/pagelark/releases/latest/download/Pagelark-macos.zip">Download .zip</a></div>
-        <div class="card dl" id="card-android"><h3>Android</h3><p>Phones and tablets</p><a class="btn primary" data-file="Pagelark-android.apk" href="https://github.com/mrk991000/pagelark/releases/latest/download/Pagelark-android.apk">Download .apk</a></div>
-        <div class="card dl" id="card-linux"><h3>Linux</h3><p>64-bit, GTK 3</p><a class="btn primary" data-file="Pagelark-linux.tar.gz" href="https://github.com/mrk991000/pagelark/releases/latest/download/Pagelark-linux.tar.gz">Download .tar.gz</a></div>
-      </div>
-      <p class="small">If a button does not start a download, see <a id="allLink" href="https://github.com/mrk991000/pagelark/releases">all releases on GitHub</a>.</p>
-      <p class="small">The apps are not code-signed yet, so your system may show a warning the first time you open Pagelark.
-        Windows: choose "More info", then "Run anyway". macOS: right-click the app, choose "Open", then confirm.
-        Linux: extract the archive and run the <code>notebook_app</code> file.
-        Android: open the file and allow installs from your browser when Android asks.</p>
-    </div>
-  </section>
-
   <section id="features">
     <div class="wrap">
       <h2>Made for thinking, not formatting</h2>
@@ -157,13 +140,28 @@
         <div class="card"><h3>Sections and pages</h3><p>Organise a notebook the way a paper one works, with sections and pages.</p></div>
         <div class="card"><h3>Search everything</h3><p>Find any note across all your pages in a moment with Ctrl/Cmd + F.</p></div>
         <div class="card"><h3>Your data, your files</h3><p>Everything is saved as plain JSON on your computer. Copy a backup or export a page as Markdown whenever you like.</p></div>
+        <div class="card"><h3>Sync without a server</h3><p>Put your notes folder inside OneDrive, Dropbox, Google Drive or Syncthing and they follow you between computers. Daily backups are kept automatically.</p></div>
         <div class="card"><h3>Light and dark</h3><p>Switch themes with one click, or follow your system.</p></div>
         <div class="card"><h3>Free and open source</h3><p>No account, no ads, no subscription. The code is on GitHub under the MIT licence.</p></div>
       </div>
     </div>
   </section>
 
-  
+  <section id="download">
+    <div class="wrap">
+      <h2>Download Pagelark</h2>
+      <p class="sub">Pick your system. All downloads are free.</p>
+      <div class="dl-grid">
+        <div class="card dl" id="card-windows"><h3>Windows</h3><p>Windows 10 or newer</p><a class="btn primary" data-file="Pagelark-windows.zip" href="https://github.com/mrk991000/pagelark/releases/latest/download/Pagelark-windows.zip">Download .zip</a></div>
+        <div class="card dl" id="card-macos"><h3>macOS</h3><p>Apple silicon and Intel</p><a class="btn primary" data-file="Pagelark-macos.zip" href="https://github.com/mrk991000/pagelark/releases/latest/download/Pagelark-macos.zip">Download .zip</a></div>
+        <div class="card dl" id="card-linux"><h3>Linux</h3><p>64-bit, GTK 3</p><a class="btn primary" data-file="Pagelark-linux.tar.gz" href="https://github.com/mrk991000/pagelark/releases/latest/download/Pagelark-linux.tar.gz">Download .tar.gz</a></div>
+      </div>
+      <p class="small">If a button does not start a download, see <a id="allLink" href="https://github.com/mrk991000/pagelark/releases">all releases on GitHub</a>.</p>
+      <p class="small">The apps are not code-signed yet, so your system may show a warning the first time you open Pagelark.
+        Windows: choose "More info", then "Run anyway". macOS: right-click the app, choose "Open", then confirm.
+        Linux: extract the archive and run the <code>notebook_app</code> file.</p>
+    </div>
+  </section>
 </main>
 
 <footer>
@@ -182,13 +180,12 @@
   }
 
   var ua = navigator.userAgent.toLowerCase();
-  var isIOS = /iphone|ipad|ipod/.test(ua);
-  var os = isIOS ? null
-         : ua.indexOf("android") !== -1 ? "android"
+  var isMobile = /android|iphone|ipad|ipod/.test(ua);
+  var os = isMobile ? null
          : ua.indexOf("windows") !== -1 ? "windows"
          : ua.indexOf("mac") !== -1 ? "macos"
          : ua.indexOf("linux") !== -1 ? "linux" : null;
-  var names = { windows: "Windows", macos: "macOS", linux: "Linux", android: "Android" };
+  var names = { windows: "Windows", macos: "macOS", linux: "Linux" };
 
   if (os) {
     document.getElementById("card-" + os).classList.add("highlight");
@@ -196,11 +193,11 @@
     main.textContent = "Download for " + names[os];
     main.href = document.querySelector("#card-" + os + " a").href;
     document.getElementById("osNote").textContent =
-      "Free and open source. Also available for the other systems below.";
-  } else if (isIOS) {
+      "Free and open source. Also available for the other desktop systems below.";
+  } else if (isMobile) {
     document.getElementById("mainDownload").textContent = "See downloads";
     document.getElementById("osNote").textContent =
-      "There is no IOS version yet. Open this page on a Windows, Mac, Linux or Android device to download the app.";
+      "Pagelark is a desktop app. Open this page on your Windows, Mac or Linux computer to download it.";
   }
 </script>
 </body>
