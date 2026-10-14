@@ -1,6 +1,6 @@
 name: Build Pagelark
 
-# Runs when you push a version tag like v1.0.0, or manually from the Actions tab.
+# Runs when you push a version tag like v1.0.1, or manually from the Actions tab.
 on:
   push:
     tags:
@@ -22,10 +22,19 @@ jobs:
             name: macos
           - os: ubuntu-latest
             name: linux
+          - os: ubuntu-latest
+            name: android
     runs-on: ${{ matrix.os }}
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Set up Java (Android only)
+        if: matrix.name == 'android'
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
 
       - uses: subosito/flutter-action@v2
         with:
@@ -70,6 +79,34 @@ jobs:
       - name: Package Linux
         if: matrix.name == 'linux'
         run: tar -czf Pagelark-linux.tar.gz -C build/linux/x64/release/bundle .
+
+      # ---------- Android ----------
+      # If you added the four ANDROID_* secrets, the APK is signed with your own key
+      # (so future versions can update over older ones). Without them it uses a
+      # temporary debug key, which is fine for trying it out.
+      - name: Set up Android signing key
+        if: matrix.name == 'android'
+        env:
+          KEYSTORE_B64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          STORE_PASSWORD: ${{ secrets.ANDROID_STORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+        run: |
+          if [ -n "$KEYSTORE_B64" ]; then
+            echo "$KEYSTORE_B64" | base64 -d > android/app/upload-keystore.jks
+            printf 'storePassword=%s\nkeyPassword=%s\nkeyAlias=%s\nstoreFile=upload-keystore.jks\n' "$STORE_PASSWORD" "$KEY_PASSWORD" "$KEY_ALIAS" > android/key.properties
+            echo "Signing with the release key"
+          else
+            echo "No signing secrets found, using the debug key"
+          fi
+
+      - name: Build Android
+        if: matrix.name == 'android'
+        run: flutter build apk --release
+
+      - name: Package Android
+        if: matrix.name == 'android'
+        run: cp build/app/outputs/flutter-apk/app-release.apk Pagelark-android.apk
 
       # ---------- Upload ----------
       - name: Keep the build as a download on the Actions page

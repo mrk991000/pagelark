@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pagelark: a free, open-source freeform notebook</title>
+<meta name="description" content="Pagelark is a free, open-source notebook where you click anywhere and type. For Windows, macOS and Linux.">
+<link rel="icon" href="icon.png">
+<style>
+  :root {
+    --bg: #faf9ff;
+    --text: #1d1b2e;
+    --muted: #5f5b78;
+    --card: #ffffff;
+    --line: #e4e1f5;
+    --brand: #5b3df5;
+    --brand-dark: #3a25b5;
+    --on-brand: #ffffff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14112a;
+      --text: #f1efff;
+      --muted: #a9a5c8;
+      --card: #1e1a3a;
+      --line: #322d58;
+      --brand: #8b76ff;
+      --brand-dark: #6a4dff;
+      --on-brand: #14112a;
+    }
+  }
+  .warn { display: none; background: #ffe3e3; color: #7a1212; padding: 10px 24px; text-align: center; font-size: 14px; }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  a { color: var(--brand); }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+
+  header { padding: 20px 0; }
+  header .wrap { display: flex; align-items: center; justify-content: space-between; }
+  .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 20px; text-decoration: none; color: var(--text); }
+  .logo img { width: 36px; height: 36px; border-radius: 9px; }
+  nav a { margin-left: 20px; text-decoration: none; color: var(--muted); font-size: 15px; }
+  nav a:hover { color: var(--text); }
+
+  .hero { padding: 56px 0 40px; display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; align-items: center; }
+  h1 { font-size: clamp(34px, 5vw, 54px); line-height: 1.1; margin: 0 0 16px; letter-spacing: -0.02em; }
+  .lead { font-size: 19px; color: var(--muted); margin: 0 0 28px; max-width: 520px; }
+
+  .downloads { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn {
+    display: inline-block; padding: 13px 22px; border-radius: 12px; text-decoration: none; font-weight: 600;
+    border: 2px solid var(--brand); color: var(--brand); background: transparent;
+  }
+  .btn:hover { background: var(--line); }
+  .btn.primary { background: var(--brand); color: var(--on-brand); }
+  .btn.primary:hover { background: var(--brand-dark); color: #fff; }
+  .small { font-size: 13px; color: var(--muted); margin-top: 14px; }
+
+  /* A little picture of the app, drawn with CSS */
+  .mock { background: var(--card); border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 20px 50px rgba(60, 40, 160, 0.18); overflow: hidden; }
+  .mock-bar { display: flex; gap: 6px; padding: 10px 14px; border-bottom: 1px solid var(--line); }
+  .mock-bar span { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
+  .mock-body { position: relative; height: 300px; }
+  .note { position: absolute; border-radius: 8px; padding: 10px 12px; font-size: 13px; color: #2b2740; box-shadow: 0 3px 8px rgba(0,0,0,0.15); }
+  .n1 { left: 6%; top: 8%; width: 46%; background: #fff4c2; transform: rotate(-2deg); }
+  .n2 { left: 44%; top: 38%; width: 50%; background: #dcebff; transform: rotate(1.5deg); }
+  .n3 { left: 10%; top: 64%; width: 42%; background: #d9f7e8; transform: rotate(-1deg); }
+
+  section { padding: 56px 0; }
+  h2 { font-size: 30px; margin: 0 0 8px; letter-spacing: -0.01em; }
+  .sub { color: var(--muted); margin: 0 0 32px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 22px; }
+  .card h3 { margin: 0 0 6px; font-size: 18px; }
+  .card p { margin: 0; color: var(--muted); font-size: 15px; }
+
+  .dl-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; }
+  .dl { text-align: center; }
+  .dl .btn { margin-top: 14px; }
+  .dl.highlight { border-color: var(--brand); box-shadow: 0 0 0 2px var(--brand); }
+
+  footer { padding: 36px 0 56px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+
+  @media (max-width: 800px) {
+    .hero { grid-template-columns: 1fr; padding-top: 32px; }
+    nav a { margin-left: 14px; }
+  }
+</style>
+</head>
+<body>
+<div class="warn" id="warn">Setup needed: open index.html and replace YOUR_GITHUB_USERNAME in the REPO line near the bottom, then upload it again.</div>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="#top"><img src="icon.png" alt="">Pagelark</a>
+    <nav>
+      <a href="#features">Features</a>
+      <a href="#download">Download</a>
+      <a id="repoLink" href="https://github.com/YOUR_GITHUB_USERNAME/pagelark">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap hero">
+    <div>
+      <h1>Notes that go anywhere on the page.</h1>
+      <p class="lead">Pagelark is a free, open-source notebook. Click anywhere, type, drag things around. No account, no cloud, and your notes stay on your computer.</p>
+      <div class="downloads">
+        <a class="btn primary" id="mainDownload" href="#download">Download</a>
+        <a class="btn" href="#download">All platforms</a>
+      </div>
+      <p class="small" id="osNote">Free for Windows, macOS, Linux and Android.</p>
+    </div>
+
+    <div class="mock" aria-hidden="true">
+      <div class="mock-bar"><span></span><span></span><span></span></div>
+      <div class="mock-body">
+        <div class="note n1"><b>Ideas</b><br>Landing page, icon, name</div>
+        <div class="note n2"><b>To do</b><br>Build the sidebar<br>Add search<br>Publish v1</div>
+        <div class="note n3"><b>Reading</b><br>Notes from the book</div>
+      </div>
+    </div>
+  </div>
+
+  <section id="features">
+    <div class="wrap">
+      <h2>Made for thinking, not formatting</h2>
+      <p class="sub">The things you wish your notes app did, without the extras that get in the way.</p>
+      <div class="grid">
+        <div class="card"><h3>Freeform pages</h3><p>Double-click anywhere to place a text box. Drag, resize and colour it. Pages scroll in every direction.</p></div>
+        <div class="card"><h3>Images and ink</h3><p>Paste a screenshot or add a picture, then draw on top of it with the pen. Move and resize everything freely.</p></div>
+        <div class="card"><h3>Sections and pages</h3><p>Organise a notebook the way a paper one works, with sections and pages.</p></div>
+        <div class="card"><h3>Search everything</h3><p>Find any note across all your pages in a moment with Ctrl/Cmd + F.</p></div>
+        <div class="card"><h3>Your data, your files</h3><p>Everything is saved as plain JSON on your computer. Copy a backup or export a page as Markdown whenever you like.</p></div>
+        <div class="card"><h3>Sync without a server</h3><p>Put your notes folder inside OneDrive, Dropbox, Google Drive or Syncthing and they follow you between computers. Daily backups are kept automatically.</p></div>
+        <div class="card"><h3>Light and dark</h3><p>Switch themes with one click, or follow your system.</p></div>
+        <div class="card"><h3>Free and open source</h3><p>No account, no ads, no subscription. The code is on GitHub under the MIT licence.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="download">
+    <div class="wrap">
+      <h2>Download Pagelark</h2>
+      <p class="sub">Pick your system. All downloads are free.</p>
+      <div class="dl-grid">
+        <div class="card dl" id="card-windows"><h3>Windows</h3><p>Windows 10 or newer</p><a class="btn primary" data-file="Pagelark-windows.zip" href="https://github.com/YOUR_GITHUB_USERNAME/pagelark/releases/latest/download/Pagelark-windows.zip">Download .zip</a></div>
+        <div class="card dl" id="card-macos"><h3>macOS</h3><p>Apple silicon and Intel</p><a class="btn primary" data-file="Pagelark-macos.zip" href="https://github.com/YOUR_GITHUB_USERNAME/pagelark/releases/latest/download/Pagelark-macos.zip">Download .zip</a></div>
+        <div class="card dl" id="card-android"><h3>Android</h3><p>Phones and tablets</p><a class="btn primary" data-file="Pagelark-android.apk" href="https://github.com/YOUR_GITHUB_USERNAME/pagelark/releases/latest/download/Pagelark-android.apk">Download .apk</a></div>
+        <div class="card dl" id="card-linux"><h3>Linux</h3><p>64-bit, GTK 3</p><a class="btn primary" data-file="Pagelark-linux.tar.gz" href="https://github.com/YOUR_GITHUB_USERNAME/pagelark/releases/latest/download/Pagelark-linux.tar.gz">Download .tar.gz</a></div>
+      </div>
+      <p class="small">If a button does not start a download, see <a id="allLink" href="https://github.com/YOUR_GITHUB_USERNAME/pagelark/releases">all releases on GitHub</a>.</p>
+      <p class="small">The apps are not code-signed yet, so your system may show a warning the first time you open Pagelark.
+        Windows: choose "More info", then "Run anyway". macOS: right-click the app, choose "Open", then confirm.
+        Linux: extract the archive and run the <code>notebook_app</code> file.
+        Android: open the file and allow installs from your browser when Android asks.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">Pagelark is free software under the MIT licence. <a id="repoLink2" href="https://github.com/YOUR_GITHUB_USERNAME/pagelark">View the source on GitHub</a></div>
+</footer>
+
+<script>
+  // Every link above already points to https://github.com/YOUR_GITHUB_USERNAME/pagelark/...
+  // Use Find and Replace (Replace All) to change YOUR_GITHUB_USERNAME to your real username.
+  // This script only adds extras: a setup banner and highlighting the visitor's system.
+
+  var base = document.getElementById("repoLink").href;
+
+  if (base.indexOf("YOUR_GITHUB_USERNAME") !== -1) {
+    document.getElementById("warn").style.display = "block";
+  }
+
+  var ua = navigator.userAgent.toLowerCase();
+  var isIOS = /iphone|ipad|ipod/.test(ua);
+  var os = isIOS ? null
+         : ua.indexOf("android") !== -1 ? "android"
+         : ua.indexOf("windows") !== -1 ? "windows"
+         : ua.indexOf("mac") !== -1 ? "macos"
+         : ua.indexOf("linux") !== -1 ? "linux" : null;
+  var names = { windows: "Windows", macos: "macOS", linux: "Linux", android: "Android" };
+
+  if (os) {
+    document.getElementById("card-" + os).classList.add("highlight");
+    var main = document.getElementById("mainDownload");
+    main.textContent = "Download for " + names[os];
+    main.href = document.querySelector("#card-" + os + " a").href;
+    document.getElementById("osNote").textContent =
+      "Free and open source. Also available for the other systems below.";
+  } else if (isIOS) {
+    document.getElementById("mainDownload").textContent = "See downloads";
+    document.getElementById("osNote").textContent =
+      "There is no iPhone or iPad version yet. Open this page on a Windows, Mac, Linux or Android device to download it.";
+  }
+</script>
+</body>
+</html>
