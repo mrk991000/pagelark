@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pagelark: a free, open-source freeform notebook</title>
-<meta name="description" content="Pagelark is a free, open-source notebook where you click anywhere and type. For Windows, macOS and Linux.">
+<meta name="description" content="Pagelark is a free, open-source notebook where you double click anywhere and type or draw. For Windows, macOS and Linux.">
 <link rel="icon" href="icon.png">
 <style>
   :root {
@@ -95,24 +95,23 @@
 </style>
 </head>
 <body>
-<div class="warn" id="warn">Setup needed: open index.html and replace mrk991000 in the REPO line near the bottom, then upload it again.</div>
 
 <header>
   <div class="wrap">
     <a class="logo" href="#top"><img src="icon.png" alt="">Pagelark</a>
     <nav>
+ <a href="#download">Download</a>
       <a href="#features">Features</a>
-      <a href="#download">Download</a>
-      <a id="repoLink" href="https://github.com/mrk991000/pagelark">GitHub</a>
-    </nav>
+     
+      </nav>
   </div>
 </header>
 
 <main id="top">
   <div class="wrap hero">
     <div>
-      <h1>Notes that go anywhere on the page.</h1>
-      <p class="lead">Pagelark is a free, open-source notebook. Click anywhere, type, drag things around. No account, no cloud, and your notes stay on your computer.</p>
+      <h1>A Simple Freeform Notebook.</h1>
+      <p class="lead">Pagelark is a free, open-source notebook. Double Click anywhere, type, draw.</p>
       <div class="downloads">
         <a class="btn primary" id="mainDownload" href="#download">Download</a>
         <a class="btn" href="#download">All platforms</a>
@@ -130,24 +129,7 @@
     </div>
   </div>
 
-  <section id="features">
-    <div class="wrap">
-      <h2>Made for thinking, not formatting</h2>
-      <p class="sub">The things you wish your notes app did, without the extras that get in the way.</p>
-      <div class="grid">
-        <div class="card"><h3>Freeform pages</h3><p>Double-click anywhere to place a text box. Drag, resize and colour it. Pages scroll in every direction.</p></div>
-        <div class="card"><h3>Images and ink</h3><p>Paste a screenshot or add a picture, then draw on top of it with the pen. Move and resize everything freely.</p></div>
-        <div class="card"><h3>Sections and pages</h3><p>Organise a notebook the way a paper one works, with sections and pages.</p></div>
-        <div class="card"><h3>Search everything</h3><p>Find any note across all your pages in a moment with Ctrl/Cmd + F.</p></div>
-        <div class="card"><h3>Your data, your files</h3><p>Everything is saved as plain JSON on your computer. Copy a backup or export a page as Markdown whenever you like.</p></div>
-        <div class="card"><h3>Sync without a server</h3><p>Put your notes folder inside OneDrive, Dropbox, Google Drive or Syncthing and they follow you between computers. Daily backups are kept automatically.</p></div>
-        <div class="card"><h3>Light and dark</h3><p>Switch themes with one click, or follow your system.</p></div>
-        <div class="card"><h3>Free and open source</h3><p>No account, no ads, no subscription. The code is on GitHub under the MIT licence.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <section id="download">
+<section id="download">
     <div class="wrap">
       <h2>Download Pagelark</h2>
       <p class="sub">Pick your system. All downloads are free.</p>
@@ -162,6 +144,26 @@
         Linux: extract the archive and run the <code>notebook_app</code> file.</p>
     </div>
   </section>
+
+
+  <section id="features">
+    <div class="wrap">
+      <h2>Made for thinking, not formatting</h2>
+      <p class="sub">The things you wish your notes app did, without the extras that get in the way.</p>
+      <div class="grid">
+        <div class="card"><h3>Freeform pages</h3><p>Double-click anywhere to place a text box. Drag, resize and colour it. Pages scroll in every direction.</p></div>
+        <div class="card"><h3>Images and ink</h3><p>Paste a screenshot or add a picture, then draw on top of it with the pen. Move and resize everything freely.</p></div>
+        <div class="card"><h3>Sections and pages</h3><p>Organise a notebook the way a paper one works, with sections and pages.</p></div>
+        <div class="card"><h3>Search everything</h3><p>Find any note across all your pages in a moment with Ctrl/Cmd + F.</p></div>
+        <div class="card"><h3>Your data, your files</h3><p>Everything is saved as plain JSON on your computer. Copy a backup or export a page as Markdown whenever you like.</p></div>
+        
+       
+        <div class="card"><h3>Free and open source</h3><p>No account, no ads, no subscription. The code is on GitHub under the MIT licence.</p></div>
+      </div>
+    </div>
+  </section>
+
+  
 </main>
 
 <footer>
@@ -169,10 +171,6 @@
 </footer>
 
 <script>
-  // Every link above already points to https://github.com/mrk991000/pagelark/...
-  // Use Find and Replace (Replace All) to change mrk991000 to your real username.
-  // This script only adds extras: a setup banner and highlighting the visitor's system.
-
   var base = document.getElementById("repoLink").href;
 
   if (base.indexOf("mrk991000") !== -1) {
