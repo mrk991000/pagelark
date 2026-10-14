@@ -15,7 +15,7 @@ Click anywhere on a page and start typing and drawing, like on paper.
 - **Light and dark mode**
 - **Export**: copy a page as Markdown (text only), or copy a full notebook backup, images included, and restore it later
 - **Shortcuts**: `Ctrl/Cmd + N` adds a page
-- **Local first**: notes are saved to `Documents/Pagelark/notebook.json` and pictures to `Documents/Pagelark/images/`
+- **Local Save Location**: notes are saved to `Documents/Pagelark/notebook.json` and pictures to `Documents/Pagelark/images/`
 
 ## Download
 
