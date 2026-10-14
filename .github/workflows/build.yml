@@ -22,8 +22,6 @@ jobs:
             name: macos
           - os: ubuntu-latest
             name: linux
-          - os: ubuntu-latest
-            name: android
     runs-on: ${{ matrix.os }}
 
     steps:
